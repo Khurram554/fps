@@ -1,0 +1,62 @@
+body{
+    background: #f0f0f0;
+}
+.header{
+    background: #c0392b;
+    text-align: center;
+    color:#fff;
+}
+.mynavigation{
+    background:#222;
+    color:#fff;
+}
+
+.footer {
+    margin-top: 50px;    
+    width: 100%;
+    background-color:#c0392b;
+    color: white;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+ }
+
+ #addStudentForm label{
+     display: block;
+ }
+
+ #addStudentForm input,
+ #addStudentForm select{
+     padding: 5px;
+     width: 100%;
+ }
+ #addStudentForm .row{
+     margin-top: 15px;
+ }
+
+ 
+ #regInput,
+ #classInput{
+     display:none;
+ }
+
+ 
+ #nameInput{
+    display: none;
+}
+
+.searchform{
+    margin: 0px auto;
+    max-width: 500px;
+    width: 100%;
+    background: aliceblue;
+    padding: 20px;
+
+}
+.searchinput
+{
+    margin: 10px 0px;
+    padding:5px;
+    width:300px;
+    
+}
