@@ -66,7 +66,7 @@ class PrintController extends Controller
                 break;
                 
                 case "byall":
-                // this is git test
+                
                 return redirect('/printpage');
                 break;
 
