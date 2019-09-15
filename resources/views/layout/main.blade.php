@@ -44,6 +44,7 @@
                                     <li><a href="{{ url('/add-student') }}">Add Student</a></li>
                                     <li><a href="{{ url('/operation') }}">Operation</a></li>
                                     <li><a href="{{ url('/bank') }}">Bank</a></li>
+                                    <li><a href="{{ url('/export-page') }}">Export</a></li>
                                   </ul>
                                 </div>
                               </nav>

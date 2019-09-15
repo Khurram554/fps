@@ -57,6 +57,45 @@ Route::any("/bank-update",function(Request $req){
     return redirect('/bank');
 });
 
+// export page 
+
+Route::get('/export-page', function () {
+    return  View("exportPage");
+});
+
+//Export
+
+Route::get("/export/{type?}/{class?}",function($type = null,$class= null){
+      //$std = DB::table('students')->get()->toArray();
+
+      if($type == "all"){
+        $std = Student::all();
+        $filename ="all-student-export" . ".xls";	
+      }
+      elseif ($type == "byclass") {
+        $std = Student::where('class',$class)->get();
+        $filename = $class."class-student-export" . ".xls";	
+      }else{
+          return "Unknow Method Call";
+      }
+     	 
+    header("Content-Type: application/vnd.ms-excel");
+			header("Content-Disposition: attachment; filename=\"$filename\"");
+
+    $flag = false;
+    foreach($std as $row) {
+        $row = $row->toArray();
+      if(!$flag) {
+        // display field/column names as first row
+        echo implode("\t", array_keys($row)) . "\r\n";
+        $flag = true;
+      }
+      echo implode("\t", array_values($row)) . "\r\n";
+    }
+    return 0;
+});
+
+
 
 //ajax route
 Route::get("/get-student-data",function(){
