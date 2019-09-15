@@ -35,7 +35,7 @@ Route::any("/student-update","StudentController@update");
 Route::get("/printpage","PrintController@showAll");
 Route::get("/print-search","PrintController@printSearch");
 Route::any('/printAll', "PrintController@printAll");
-Route::get("/print/{id}","PrintController@print");
+Route::get("/print/{id}/{to}/{from}","PrintController@print");
 
 
 // Bank

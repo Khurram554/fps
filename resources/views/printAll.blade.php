@@ -156,7 +156,53 @@ $(document).ready(function() {
 </script>
 <div class="container-fluid prints">
    
-      <?php $total = 0; ?>
+      <?php
+      
+      
+      $total = 0;
+      
+      $to = date("M",strtotime($to));
+      $from = date("M",strtotime($from));
+
+
+      $issueDate = date('d-m-Y');
+      $dueDate =  "10-".date('m-Y');
+      $validityDate =  "30-".date('m-Y');
+
+       $issueDay = (int) date("d",strtotime($issueDate));
+
+       if($issueDay > 10){
+        $dueDate =  "10-".date('m-Y', strtotime('+1 month'));
+        $validityDate =  "30-".date('m-Y', strtotime('+1 month'));
+       }
+
+
+ 
+  
+// Formulate the Difference between two dates 
+ $d1 = date("d-m-Y",strtotime($to));
+ $d2 = date("d-m-Y",strtotime($from));
+
+$diff = abs(strtotime($d1) - strtotime($d2));  
+  
+  
+// To get the year divide the resultant date into 
+// total seconds in a year (365*60*60*24) 
+$years = floor($diff / (365*60*60*24));  
+  
+  
+// To get the month, subtract it with years and 
+// divide the resultant date into 
+// total seconds in a month (30*60*60*24) 
+$months = floor(($diff - $years * 365*60*60*24) 
+                               / (30*60*60*24));  
+  
+  
+
+
+
+      
+      ?>
      
         @foreach ($data->data as $student)
         
@@ -164,7 +210,7 @@ $(document).ready(function() {
                 
                 
                 
-                $total +=   (int) $student->tutionfee;
+                $total +=   (int) $student->tutionfee  * (int) $months;
                 $total +=   (int) $student->arrears;
                 $total +=   (int) $student->registration;            
                 $total +=   (int) $student->admission;            
@@ -183,18 +229,27 @@ $(document).ready(function() {
         <div class=" challan-copy" >
             <h4>FARAN PUBLIC SCHOOL</h4>
                 <div>
-                    ISSUE DATE: <b>{{ date('d-m-Y') }}</b>
+                        Issue Date: <b>{{ $issueDate }}</b>
 
                     <span class="float-right"><b>{{ $copy }} COPY</b></span>
                 </div>
                 
                 <div>
-                        DUE DATE: <b>10-{{ date('m-Y') }}</b>
+                        Due Date: <b>{{ $dueDate }}</b>
                 </div>
     
                 <div>
-                        VALIDITY DATE: <b>30-{{ date('m-Y') }}</b>
+                        Validaity Date: <b>{{ $validityDate }}</b>
                 </div>
+
+                <div>
+                        @if ($to == $from)
+                        Billing Month: <b>{{ $to }}</b>
+                        @else
+                        Billing Month: <b>{{ $to }} - {{ $from }}</b>
+                        @endif
+                </div>
+
     
                 <div>
                     <center>
@@ -232,7 +287,7 @@ $(document).ready(function() {
 
                     <tr>
                         <td>Tution Fee</td>
-                        <td>{{  $student->tutionfee}}</td>   
+                         <td>{{  $student->tutionfee }} x {{$months }}</td>   
                     </tr>
 
                     <tr>

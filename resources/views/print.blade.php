@@ -35,7 +35,7 @@
         <script>
                 $(document).ready(function(){
                     $.ajax({
-                        url: "/get-student-data",
+                        url: '{{ url("/get-student-data")}}',
                         dataType: "json",
                         success: function(e){
                            for(std in e){
@@ -113,14 +113,57 @@
 <br><br><br>
 <div class="row">
         
+    <div class="col">
+            <label>Challan Date From: <input type="month"  id="toMonth" ></label>
+            <label>Challan Date till: <input type="month"  id="fromMonth"></label>
+
+            <script>
+            
+            // $("#toMonth").change(function(){
+
+            //     $("#formtoDate").$(this).val();
+
+            // });
+            
+            </script>
+    </div>
     <div class="col-md-12">
-        
+           
             Shown {{ $data->count() * $data->currentPage() }} of {{$data->total() }} 
-             <form action="{{ url("/printAll") }}" method="POST">
+             <form id="allprintform" action="{{ url("/printAll") }}" method="POST">
                 @csrf
              <input type="hidden" name="data" value="{{json_encode($data)}}">
+             <input type="hidden" name="to" id="formDateTo">
+             <input type="hidden" name="from" id="formDateFrom">
                 <button type='submit' class="btn btn-success " style="float:right">Print</button>
              </form>
+
+             <script>
+                 $("#allprintform").click(function(e){
+                       e.preventDefault();
+
+                       to = $("#toMonth").val();
+                       from = $("#fromMonth").val();
+
+                       if(to == ""){
+                                    alert("please Enter (Challan Date From)");
+                                   
+                        }
+
+                                if(from == ""){
+                                    alert("please Enter (Challan Date Till)");
+                                    
+                                }
+                        if((to !== "") && (from !== "")){
+                            $("#formDateTo").val(to);
+                            $("#formDateFrom").val(from);
+                            $("#allprintform").submit();
+                            
+                        }
+
+                      
+                 });
+             </script>
             
         <table id="studentTable" class="table">
                
@@ -152,7 +195,31 @@
                 <td class="numericEdit" > {{ $student->stationery}}</td>
                 <td class="numericEdit" > {{ $student->examination}}</td>
                 <td>
-                    <a href="{{ url("/print/$student->id") }}">Print</a>
+                    <a  class="single-print" onclick="print({{$student->id}})">Print</a>
+                    <script>
+                           function print(id){
+                                url = '{{ url("/print") }}/'+id;
+                               
+                                to = $('#toMonth').val();
+                                from = $('#fromMonth').val();
+
+                                if(to == ""){
+                                    alert("please Enter (Challan Date From)");
+                                   
+                                }
+
+                                if(from == ""){
+                                    alert("please Enter (Challan Date Till)");
+                                    
+                                }
+                                if((to !== "") && (from !== "")){
+                                    url = url+"/"+to+"/"+from;
+
+                                    window.open(url);
+                                }
+                                
+                            }
+                        </script>
                 </td>
             </tr>
             @endforeach

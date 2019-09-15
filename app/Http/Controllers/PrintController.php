@@ -20,6 +20,8 @@ class PrintController extends Controller
 
     public function printAll(Request $request){
         $data = json_decode($request['data']);
+        $to = $request['to'];
+        $from = $request['from'];
         $bank = Bank::all();
         $bank = $bank[0];
         $arr  = array(
@@ -31,14 +33,16 @@ class PrintController extends Controller
     
     );
 
-        return  View("printAll",["data" => $data, "bank" =>  $arr ] );
+        return  View("printAll",["data" => $data, "bank" => $bank, "to" => $to, "from" => $from] );
     }
 
-    public function print($id){
+    public function print($id,$to,$from){
+
+          
           $data = Student::where('id', $id)->get();
           $bank = Bank::all();
          
-        return  View("printSingle",["data" => $data, "bank" => $bank] );
+        return  View("printSingle",["data" => $data, "bank" => $bank, "to" => $to, "from" => $from] );
     }
 
     public function printSearch(Request $request){
